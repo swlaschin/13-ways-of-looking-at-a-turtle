@@ -108,7 +108,7 @@ module TurtleProgram_v2_Example =
     let penDown  = KeepGoing (PenDown stop)
     let setColor color = KeepGoing (SetColor (color,Stop))
 
-    let handleMoveReponse log moveResponse = turtleProgram {
+    let handleMoveResponse log moveResponse = turtleProgram {
         match moveResponse with
         | Turtle.MoveOk -> 
             ()
@@ -122,9 +122,9 @@ module TurtleProgram_v2_Example =
     // example
     let drawTwoLines log = turtleProgram {
         let! response = move 60.0
-        do! handleMoveReponse log response 
+        do! handleMoveResponse log response 
         let! response = move 60.0
-        do! handleMoveReponse log response 
+        do! handleMoveResponse log response 
         }
     // val drawTwoLines: TurtleProgram<unit>
 
