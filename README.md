@@ -228,7 +228,7 @@ Neither the client nor the command handler needs to track state.  Only the Event
 * If care is not taken, the command handler can get overly complex and evolve into implementing too much business logic.   
 
 
-#### Functional Retroactive Programming (stream processing)
+#### 11: Functional Retroactive Programming (stream processing)
 
 In the event sourcing approach, all the domain logic (in our case, just tracing the state!) is embedded in the command handler. One drawback of this is that,
 as the application evolves, the logic in the command handler can become very complex.
