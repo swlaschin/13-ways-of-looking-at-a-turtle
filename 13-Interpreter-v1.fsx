@@ -76,12 +76,13 @@ module TurtleProgram_v1 =
 
     /// Create a union type to represent each instruction
     type TurtleProgram = 
+        //         (input params)  (response)
         | Stop
-        | Move of Distance * (MoveResponse -> TurtleProgram)
-        | Turn of Angle * (unit -> TurtleProgram)
-        | PenUp of (unit -> TurtleProgram)
-        | PenDown of (unit -> TurtleProgram)
-        | SetColor of PenColor * (SetColorResponse -> TurtleProgram)
+        | Move     of Distance   * (MoveResponse -> TurtleProgram)
+        | Turn     of Angle      * (unit -> TurtleProgram)
+        | PenUp    of (* none *)   (unit -> TurtleProgram)
+        | PenDown  of (* none *)   (unit -> TurtleProgram)
+        | SetColor of PenColor   * (SetColorResponse -> TurtleProgram)
 
 // ------------------------
 // Example of Turtle Program V1 object
