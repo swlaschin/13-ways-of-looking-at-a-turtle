@@ -195,9 +195,9 @@ module TurtleComputationClient =
 // Turtle Computation Tests
 // ======================================
 
-(*
+
 TurtleComputationClient.drawTriangle() 
 TurtleComputationClient.drawThreeLines() 
 TurtleComputationClient.drawPolygon 4 
-*)
+
 

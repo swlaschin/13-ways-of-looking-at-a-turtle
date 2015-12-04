@@ -144,10 +144,10 @@ module TurtleCommmandClient =
 // TurtleCommmandClient Tests
 // ======================================
 
-(*
+
 TurtleCommmandClient.drawTriangle() 
 TurtleCommmandClient.drawThreeLines() // Doesn't go back home
 TurtleCommmandClient.drawPolygon 4 
-*)
+
 
 

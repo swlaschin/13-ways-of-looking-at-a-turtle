@@ -1,0 +1,88 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>3ded8669-07bb-4e9f-9764-f393d3a5549d</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>13-ways-of-looking-at-a-turtle</RootNamespace>
+    <AssemblyName>13-ways-of-looking-at-a-turtle</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <Name>13-ways-of-looking-at-a-turtle</Name>
+    <TargetFSharpCoreVersion>4.3.0.0</TargetFSharpCoreVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <Tailcalls>false</Tailcalls>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <Tailcalls>true</Tailcalls>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <WarningLevel>3</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="mscorlib" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Numerics" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="01-OOTurtle.fsx" />
+    <None Include="02-FPTurtle.fsx" />
+    <None Include="03-Api_OO_Core.fsx" />
+    <None Include="04-Api_FP_Core.fsx" />
+    <None Include="05-TurtleAgent.fsx" />
+    <None Include="06-DependencyInjection_Interface-1.fsx" />
+    <None Include="06-DependencyInjection_Interface-2.fsx" />
+    <None Include="07-DependencyInjection_Functions-1.fsx" />
+    <None Include="07-DependencyInjection_Functions-2.fsx" />
+    <None Include="08-StateMonad.fsx" />
+    <None Include="09-BatchCommands.fsx" />
+    <None Include="10-EventSourcing.fsx" />
+    <None Include="11-FRP.fsx" />
+    <None Include="12-BranchingOnResponse.fsx" />
+    <None Include="13-Interpreter-v1.fsx" />
+    <None Include="13-Interpreter-v2.fsx" />
+    <None Include="Common.fsx" />
+    <None Include="FPTurtleLib.fsx" />
+    <None Include="FPTurtleLib2.fsx" />
+    <None Include="OOTurtleLib.fsx" />
+    <None Include="TurtleApiHelpers.fsx" />
+  </ItemGroup>
+  <PropertyGroup>
+    <MinimumVisualStudioVersion Condition="'$(MinimumVisualStudioVersion)' == ''">11</MinimumVisualStudioVersion>
+  </PropertyGroup>
+  <Choose>
+    <When Condition="'$(VisualStudioVersion)' == '11.0'">
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\..\Microsoft SDKs\F#\3.0\Framework\v4.0\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <PropertyGroup>
+        <FSharpTargetsPath>$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\FSharp\Microsoft.FSharp.Targets</FSharpTargetsPath>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+  <Import Project="$(FSharpTargetsPath)" Condition="Exists('$(FSharpTargetsPath)')" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
