@@ -35,10 +35,10 @@ module TurtleProgram_v2 =
 
     /// Create a type to represent each instruction
     type TurtleInstruction<'next> = 
-        | Move of Distance * (MoveResponse -> 'next)
-        | Turn of Angle * (unit -> 'next)
-        | PenUp of (unit -> 'next)
-        | PenDown of (unit -> 'next)
+        | Move     of Distance * (MoveResponse -> 'next)
+        | Turn     of Angle    * 'next
+        | PenUp    of            'next
+        | PenDown  of            'next
         | SetColor of PenColor * (SetColorResponse -> 'next)
 
     /// Create a type to represent the Turtle Program
@@ -50,11 +50,16 @@ module TurtleProgram_v2 =
     /// map the instructions
     let mapInstr f inst  = 
         match inst with
-        | Move(dist,next) -> Move(dist,fun response -> f(next response)) 
-        | Turn(angle,next) -> Turn(angle,next >> f)  // "next >> f" is shorter version 
-        | PenUp(next) -> PenUp(next >> f)
-        | PenDown(next) -> PenDown(next >> f)
-        | SetColor(color,next) -> SetColor(color,next >> f)
+        | Move(dist,next) -> 
+            Move(dist,next >> f) 
+        | Turn(angle,next) -> 
+            Turn(angle,f next)  
+        | PenUp(next) -> 
+            PenUp(f next)
+        | PenDown(next) -> 
+            PenDown(f next)
+        | SetColor(color,next) -> 
+            SetColor(color,next >> f)
 
     let returnT x = 
         Stop x 
@@ -84,22 +89,24 @@ module TurtleProgram_v2_Example =
 
     // example
     let drawTriangle = 
-        KeepGoing (Move (100.0, fun response  -> 
-        KeepGoing (Turn (120.0<Degrees>, fun () -> 
-        KeepGoing (Move (100.0, fun response  -> 
-        KeepGoing (Turn (120.0<Degrees>, fun () -> 
-        KeepGoing (Move (100.0, fun response  -> 
-        KeepGoing (Turn (120.0<Degrees>, fun () -> 
-        Stop () ))))))))))))
+        KeepGoing (Move (100.0, fun response -> 
+         KeepGoing (
+          Turn (120.0<Degrees>,
+           KeepGoing (Move (100.0, fun response  -> 
+            KeepGoing (
+             Turn (120.0<Degrees>, KeepGoing (Move (100.0, fun response  -> 
+              KeepGoing (
+               Turn (
+                120.0<Degrees>, Stop () ))))))))))))
     // val drawTriangle : TurtleProgram<unit>  
 
     // helper functions
-    let stop x = Stop x
-    let move dist  = KeepGoing (Move (dist, stop))
-    let turn angle  = KeepGoing (Turn (angle, stop))
+    let stop = Stop()
+    let move dist  = KeepGoing (Move (dist, Stop))    // "Stop" is a function
+    let turn angle  = KeepGoing (Turn (angle, stop))  // "stop" is a value
     let penUp  = KeepGoing (PenUp stop)
     let penDown  = KeepGoing (PenDown stop)
-    let setColor color = KeepGoing (SetColor (color,stop))
+    let setColor color = KeepGoing (SetColor (color,Stop))
 
     let handleMoveReponse log moveResponse = turtleProgram {
         match moveResponse with
@@ -138,20 +145,18 @@ module TurtleProgram_v2_Interpreter =
             state
         | KeepGoing (Move (dist,next)) ->
             let result,newState = Turtle.move log dist state 
-            let nextProgram = next result 
+            let nextProgram = next result // compute next program
             recurse newState nextProgram 
         | KeepGoing (Turn (angle,next)) ->
             let newState = Turtle.turn log angle state 
-            let nextProgram = next()
+            let nextProgram = next        // use next program directly
             recurse newState nextProgram 
         | KeepGoing (PenUp next) ->
             let newState = Turtle.penUp log state 
-            let nextProgram = next()
-            recurse newState nextProgram 
+            recurse newState next
         | KeepGoing (PenDown next) -> 
             let newState = Turtle.penDown log state 
-            let nextProgram = next()
-            recurse newState nextProgram 
+            recurse newState next
         | KeepGoing (SetColor (color,next)) ->
             let result,newState = Turtle.setColor log color state 
             let nextProgram = next result
@@ -172,16 +177,13 @@ module TurtleProgram_v2_Interpreter =
             recurse newDistanceSoFar nextProgram 
         | KeepGoing (Turn (angle,next)) ->
             // no change in distanceSoFar
-            let nextProgram = next()
-            recurse distanceSoFar nextProgram 
+            recurse distanceSoFar next
         | KeepGoing (PenUp next) ->
             // no change in distanceSoFar
-            let nextProgram = next()
-            recurse distanceSoFar nextProgram 
+            recurse distanceSoFar next
         | KeepGoing (PenDown next) -> 
             // no change in distanceSoFar
-            let nextProgram = next()
-            recurse distanceSoFar nextProgram 
+            recurse distanceSoFar next
         | KeepGoing (SetColor (color,next)) ->
             // no change in distanceSoFar
             let result = Turtle.ColorOk

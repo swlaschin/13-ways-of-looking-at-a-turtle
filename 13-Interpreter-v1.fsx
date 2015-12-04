@@ -118,11 +118,11 @@ module TurtleProgram_v1_Interpreter =
             state
         | Move (dist,next) ->
             let result,newState = Turtle.move log dist state 
-            let nextProgram = next result 
+            let nextProgram = next result  // compute the next step
             interpretAsTurtle newState nextProgram 
         | Turn (angle,next) ->
             let newState = Turtle.turn log angle state 
-            let nextProgram = next()
+            let nextProgram = next()       // compute the next step
             interpretAsTurtle newState nextProgram 
         | PenUp next ->
             let newState = Turtle.penUp log state 
@@ -177,11 +177,29 @@ do
     let initialState = Turtle.initialTurtleState
     interpret initialState program |> ignore
 
+    // output
+    (*
+    Move 100.0
+    ...Draw line from (0.0,0.0) to (100.0,0.0) using Black
+    Turn 120.0
+    Move 100.0
+    ...Draw line from (100.0,0.0) to (50.0,86.6) using Black
+    Turn 120.0
+    Move 100.0
+    ...Draw line from (50.0,86.6) to (0.0,0.0) using Black
+    Turn 120.0
+    *)
+
 do 
     let program = TurtleProgram_v1_Example.drawTriangle               // same program  
     let interpret = TurtleProgram_v1_Interpreter.interpretAsDistance  // choose an interpreter 
     let initialState = 0.0
     interpret initialState program |> printfn "Total distance moved is %0.1f"
+
+    // output
+    (*
+    Total distance moved is 300.0
+    *)
 
 // ============================================================================
 // Turtle Program v1 computation expression
@@ -193,11 +211,11 @@ module TurtleProgram_v1_Workflow =
     open Turtle
 
     type TurtleProgram<'a> = 
-        | Stop of 'a
-        | Move of Distance * (MoveResponse -> TurtleProgram<'a>)
-        | Turn of Angle * (unit -> TurtleProgram<'a>)
-        | PenUp of (unit -> TurtleProgram<'a>)
-        | PenDown of (unit -> TurtleProgram<'a>)
+        | Stop     of 'a
+        | Move     of Distance * (MoveResponse -> TurtleProgram<'a>)
+        | Turn     of Angle    * (unit -> TurtleProgram<'a>)
+        | PenUp    of            (unit -> TurtleProgram<'a>)
+        | PenDown  of            (unit -> TurtleProgram<'a>)
         | SetColor of PenColor * (SetColorResponse -> TurtleProgram<'a>)
 
     let returnT x = 
@@ -208,9 +226,13 @@ module TurtleProgram_v1_Workflow =
         | Stop x -> 
             f x
         | Move(dist,next) -> 
+            (*
             Move(dist,fun response -> (bindT f)(next response)) 
+            *)
+            // "next >> bindT f" is a shorter version of function response
+            Move(dist,next >> bindT f)
         | Turn(angle,next) -> 
-            Turn(angle,next >> bindT f)  // "next >> bindT f" is shorter version 
+            Turn(angle,next >> bindT f)
         | PenUp(next) -> 
             PenUp(next >> bindT f)
         | PenDown(next) -> 
