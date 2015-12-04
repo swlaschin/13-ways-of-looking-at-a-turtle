@@ -117,7 +117,7 @@ module TurtleComputationClient =
     // draw various things
     // ----------------------------------------
 
-    let handleMoveReponse moveResponse = turtle {
+    let handleMoveResponse moveResponse = turtle {
         match moveResponse with
         | Turtle.MoveOk -> 
             () // do nothing
@@ -162,13 +162,13 @@ module TurtleComputationClient =
         // define a set of instructions 
         let t = turtle {
             let! response = move 60.0 
-            do! handleMoveReponse response 
+            do! handleMoveResponse response 
 
             let! response = move 60.0 
-            do! handleMoveReponse response 
+            do! handleMoveResponse response 
 
             let! response = move 60.0 
-            do! handleMoveReponse response 
+            do! handleMoveResponse response 
             } 
 
         // finally, run the monad using the initial state
