@@ -288,3 +288,50 @@ This AST can then interpreted later in various ways.
 * Complex to understand.
 * Only works well if there are a limited set of operations to perform.
 * Can be inefficient if programs get too large.
+
+#### 14: Abstract Data Turtle
+
+In this design, we use the concept of an [abstract data type](https://en.wikipedia.org/wiki/Abstract_data_type) to encapsulate the operations on a turtle.
+
+That is, a "turtle" is defined as an opaque type along with a corresponding set of operations, in the same way that standard F# types such as `List`, `Set` and `Map` are defined.
+
+That is, we have number of functions that work on the type, but we are not allowed to see "inside" the type itself.
+
+*Advantages*
+
+* All code is stateless, hence easy to test.
+* The encapsulation of the state means that the focus is always fully on the behavior and properties of the type.
+* Clients can never have a dependency on a particular implementation, which means that implementations can be changed safely.
+* You can even swap implementations (e.g. by shadowing, or linking to a different assembly) for testing, performance, etc.
+  
+*Disadvantages*
+
+* The client has to manage the current turtle state.
+* The client cannot control the implementation (e.g. by using dependency injection). 
+
+#### 15: Capability-based Turtle 
+
+In the "monadic control flow" approach [(way 12)](/posts/13-ways-of-looking-at-a-turtle-2/#way12) we handled responses from the turtle telling us that it had hit a barrier.
+
+But even though we had hit a barrier, nothing was stopping us from calling the `move` operation over and over again!  
+
+Now imagine that, once we had hit the barrier, the `move` operation was no longer available to us.  We couldn't abuse it because it would be no longer there!
+
+To make this work, we shouldn't provide an API, but instead, after each call, return a list of functions that the client can call to do the next step. The functions would normally include
+the usual suspects of `move`, `turn`, `penUp`, etc., but when we hit a barrier, `move` would be dropped from that list.  Simple, but effective.
+
+This technique is closely related to an authorization and security technique called *capability-based security*. If you are interested in learning more,
+I have [a whole series of posts devoted to it](/posts/capability-based-security/).
+
+*Advantages*
+
+* Prevents clients from abusing the API.
+* Allows APIs to evolve (and devolve) without breaking clients. For example, I could remove the `setColor` part of the API by just returning `None` in the record of functions,
+  and no client would break.
+* Clients are decoupled from a particular implementation.
+  
+*Disadvantages*
+
+* Complex to implement.
+* The client's logic is much more convoluted as it can never be sure that a function will be available! It has to check every time.
+* The API is not easily serializable, unlike some of the data-oriented APIs.
