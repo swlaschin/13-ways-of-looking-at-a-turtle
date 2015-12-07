@@ -311,7 +311,7 @@ That is, we have number of functions that work on the type, but we are not allow
 
 #### 15: Capability-based Turtle 
 
-In the "monadic control flow" approach [(way 12)](/posts/13-ways-of-looking-at-a-turtle-2/#way12) we handled responses from the turtle telling us that it had hit a barrier.
+In the "monadic control flow" approach [(way 12)](http://fsharpforfunandprofit.com/posts/13-ways-of-looking-at-a-turtle-2/#way12) we handled responses from the turtle telling us that it had hit a barrier.
 
 But even though we had hit a barrier, nothing was stopping us from calling the `move` operation over and over again!  
 
@@ -321,7 +321,7 @@ To make this work, we shouldn't provide an API, but instead, after each call, re
 the usual suspects of `move`, `turn`, `penUp`, etc., but when we hit a barrier, `move` would be dropped from that list.  Simple, but effective.
 
 This technique is closely related to an authorization and security technique called *capability-based security*. If you are interested in learning more,
-I have [a whole series of posts devoted to it](/posts/capability-based-security/).
+I have [a whole series of posts devoted to it](http://fsharpforfunandprofit.com/posts/capability-based-security/).
 
 *Advantages*
 
