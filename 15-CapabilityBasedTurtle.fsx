@@ -109,8 +109,10 @@ module CapBasedTurtle =
             log (sprintf "Turn %0.1f" angle)
             // calculate new angle
             let newAngle = (state.angle + angle) % 360.0<Degrees>
+            // NEW!! assume you can always move after turning
+            let canMove = true
             // update the state
-            {state with angle = newAngle}
+            {state with angle = newAngle; canMove = canMove} 
 
         /// Function is private! Only accessible to the client via the TurtleFunctions record
         let private penUp log state =
