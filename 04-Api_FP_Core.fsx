@@ -86,11 +86,11 @@ module TurtleApiLayer =
                     lift2R setColor colorR stateR
 
                 | _ -> 
-                    Failure (InvalidCommand commandStr)
+                    Error (InvalidCommand commandStr)
         
             // Lift `updateState` into the world of Results and 
             // call it with the new state.
-            mapR updateState newStateR
+            Result.map updateState newStateR
 
             // Return the final result (output of updateState)
 
@@ -176,6 +176,6 @@ TurtleApiClient.drawPolygon 4
 
 // test errors
 TurtleApiClient.triggerError()  
-// Failure (InvalidDistance "bad")
+// Error (InvalidDistance "bad")
 *)
 

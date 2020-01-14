@@ -134,7 +134,7 @@ module TurtleApiLayer =
                     }
 
                 | _ -> 
-                    Failure (InvalidCommand commandStr)
+                    Error (InvalidCommand commandStr)
         
             // return any errors
             result
@@ -219,7 +219,7 @@ TurtleApiClient.drawPolygon 4
 
 // test errors
 AgentClient.triggerError()  
-// Failure (InvalidDistance "bad")
+// Error (InvalidDistance "bad")
 *)
 
 

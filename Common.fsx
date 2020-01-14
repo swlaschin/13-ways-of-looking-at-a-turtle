@@ -64,32 +64,20 @@ let dummyDrawLine log oldPos newPos color =
 let trimString (str:string) = str.Trim()
 
 // ======================================
-// Result type and companion module
+// Result companion module
 // ======================================
-
-type Result<'a,'error> = 
-    | Success of 'a
-    | Failure of 'error
 
 module Result = 
 
     let returnR x = 
-        Success x
-
-    let bindR f xR = 
-        match xR with
-        | Success x -> f x
-        | Failure err -> Failure err 
+        Ok x
 
     // infix version of bind
     let ( >>= ) xR f = 
-        bindR f xR
-
-    let mapR f = 
-        bindR (f >> returnR)
+        Result.bind f xR
 
     // infix version of map
-    let ( <!> ) = mapR 
+    let ( <!> ) = Result.map
 
     let applyR fR xR = 
         fR >>= (fun f ->
@@ -108,7 +96,7 @@ module Result =
     /// Computation Expression
     type ResultBuilder() =
         member this.Bind(m:Result<'a,'error>,f:'a -> Result<'b,'error>) = 
-            bindR f m
+            Result.bind f m
         member this.Return(x) :Result<'a,'error> = 
             returnR x
         member this.ReturnFrom(m) :Result<'a,'error> = 
