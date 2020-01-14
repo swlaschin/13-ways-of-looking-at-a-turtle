@@ -218,7 +218,7 @@ TurtleApiClient.drawThreeLines() // Doesn't go back home
 TurtleApiClient.drawPolygon 4 
 
 // test errors
-AgentClient.triggerError()  
+TurtleApiClient.triggerError()  
 // Failure (InvalidDistance "bad")
 *)
 
