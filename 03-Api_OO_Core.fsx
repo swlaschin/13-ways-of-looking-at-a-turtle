@@ -19,7 +19,6 @@ input and returns a Result containing any errors.
 #load "Common.fsx"
 #load "OOTurtleLib.fsx"
 
-open System
 open Common
 
 // ======================================

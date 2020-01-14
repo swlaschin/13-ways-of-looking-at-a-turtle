@@ -14,12 +14,9 @@ This Turtle Program can then interpreted later in various ways
 ====================================== *)
 
 
-open System
-
 #load "Common.fsx"
 #load "FPTurtleLib2.fsx"
 
-open System
 open Common
 open FPTurtleLib2
 

@@ -18,7 +18,6 @@ This approach means that there is no state that needs to be persisted between ca
 #load "Common.fsx"
 #load "FPTurtleLib.fsx"
 
-open System
 open Common
 
 // ======================================
@@ -27,7 +26,6 @@ open Common
 
 module TurtleCommmandHandler = 
 
-    open Result
     open FPTurtleLib
 
     /// Function to log a message

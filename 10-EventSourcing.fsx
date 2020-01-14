@@ -21,7 +21,6 @@ Neither the client nor the command handler needs to track state.  Only the Event
 #load "Common.fsx"
 #load "FPTurtleLib.fsx"
 
-open System
 open Common
 open FPTurtleLib
 
