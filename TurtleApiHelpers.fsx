@@ -33,24 +33,24 @@ type ErrorMessage =
 // convert the distance parameter to a float, or throw an exception
 let validateDistance distanceStr =
     try
-        Success (float distanceStr)
+        Ok (float distanceStr)
     with
     | ex -> 
-        Failure (InvalidDistance distanceStr)
+        Error (InvalidDistance distanceStr)
 
 // convert the angle parameter to a float, or throw an exception
 let validateAngle angleStr =
     try
-        Success ((float angleStr) * 1.0<Degrees>)
+        Ok ((float angleStr) * 1.0<Degrees>)
     with
     | ex -> 
-        Failure (InvalidAngle angleStr)
+        Error (InvalidAngle angleStr)
 
 // convert the color parameter to a PenColor, or throw an exception
 let validateColor colorStr =
     match colorStr with
-    | "Black" -> Success Black
-    | "Blue" -> Success Blue
-    | "Red" -> Success Red
+    | "Black" -> Ok Black
+    | "Blue" -> Ok Blue
+    | "Red" -> Ok Red
     | _ -> 
-        Failure (InvalidColor colorStr)
+        Error (InvalidColor colorStr)

@@ -49,7 +49,7 @@ module TurtleApi_PassInAllFunctions =
         member this.Exec move turn penUp penDown setColor (commandStr:string) = 
             let tokens = commandStr.Split(' ') |> List.ofArray |> List.map trimString
 
-            // return Success of unit, or Failure
+            // return Ok of unit, or Error
             match tokens with
             | [ "Move"; distanceStr ] -> result {
                 let! distance = validateDistance distanceStr 
@@ -75,7 +75,7 @@ module TurtleApi_PassInAllFunctions =
                 updateState newState
                 }
             | _ -> 
-                Failure (InvalidCommand commandStr)
+                Error (InvalidCommand commandStr)
 
 // -----------------------------
 // Turtle Implementations for "Pass in all functions" design
@@ -145,6 +145,6 @@ do
 do
     let mockApi s = 
         printfn "[MockAPI] %s" s
-        Success ()
+        Ok ()
     TurtleApiClient_PassInAllFunctions.drawTriangle(mockApi) 
 
