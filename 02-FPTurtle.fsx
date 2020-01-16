@@ -17,7 +17,6 @@ The client must keep track of the current state and pass it into the next functi
 
 #load "Common.fsx"
 
-open System
 open Common
 
 // ======================================

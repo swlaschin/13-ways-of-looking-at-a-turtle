@@ -17,11 +17,8 @@ The client injects a specific turtle implementation via the API's constructor.
 #load "Common.fsx"
 #load "OOTurtleLib.fsx"
 #load "FPTurtleLib.fsx"
-#load "TurtleApiHelpers.fsx"
 
-open System
 open Common
-open TurtleApiHelpers // helpers for API validation, etc
 
 
 // ============================================================================
@@ -69,27 +66,27 @@ module TurtleApiLayer_FP =
     // convert the distance parameter to a float, or throw an exception
     let validateDistance distanceStr =
         try
-            Success (float distanceStr)
+            Ok (float distanceStr)
         with
         | ex -> 
-            Failure (InvalidDistance distanceStr)
+            Error (InvalidDistance distanceStr)
 
     // convert the angle parameter to a float, or throw an exception
     let validateAngle angleStr =
         try
-            Success ((float angleStr) * 1.0<Degrees>)
+            Ok ((float angleStr) * 1.0<Degrees>)
         with
         | ex -> 
-            Failure (InvalidAngle angleStr)
+            Error (InvalidAngle angleStr)
 
     // convert the color parameter to a PenColor, or throw an exception
     let validateColor colorStr =
         match colorStr with
-        | "Black" -> Success Black
-        | "Blue" -> Success Blue
-        | "Red" -> Success Red
+        | "Black" -> Ok Black
+        | "Blue" -> Ok Blue
+        | "Red" -> Ok Red
         | _ -> 
-            Failure (InvalidColor colorStr)
+            Error (InvalidColor colorStr)
 
     type TurtleApi(turtleFunctions: TurtleFunctions) =
 
@@ -104,7 +101,7 @@ module TurtleApiLayer_FP =
         member this.Exec (commandStr:string) = 
             let tokens = commandStr.Split(' ') |> List.ofArray |> List.map trimString
 
-            // return Success of unit, or Failure
+            // return Ok of unit, or Error
             match tokens with
             | [ "Move"; distanceStr ] -> result {
                 let! distance = validateDistance distanceStr 
@@ -130,7 +127,7 @@ module TurtleApiLayer_FP =
                 updateState newState
                 }
             | _ -> 
-                Failure (InvalidCommand commandStr)
+                Error (InvalidCommand commandStr)
         
 
 // ----------------------------

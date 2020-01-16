@@ -20,7 +20,6 @@ As a result, there are no mutables anywhere.
 #load "Common.fsx"
 #load "FPTurtleLib.fsx"
 
-open System
 open Common
 open FPTurtleLib
 

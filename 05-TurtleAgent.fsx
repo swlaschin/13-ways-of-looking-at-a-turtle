@@ -23,7 +23,6 @@ storing the current state as a parameter in the recursive message processing loo
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open TurtleApiHelpers // helpers for API validation, etc
 
@@ -33,7 +32,6 @@ open TurtleApiHelpers // helpers for API validation, etc
 
 module AgentImplementation = 
 
-    open Result
     open FPTurtleLib
 
     type TurtleCommand = 
@@ -134,7 +132,7 @@ module TurtleApiLayer =
                     }
 
                 | _ -> 
-                    Failure (InvalidCommand commandStr)
+                    Error (InvalidCommand commandStr)
         
             // return any errors
             result
@@ -219,7 +217,7 @@ TurtleApiClient.drawPolygon 4
 
 // test errors
 TurtleApiClient.triggerError()  
-// Failure (InvalidDistance "bad")
+// Error (InvalidDistance "bad")
 *)
 
 

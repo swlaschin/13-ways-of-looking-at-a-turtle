@@ -21,7 +21,6 @@ The API layer manages the state (rather than the client) by storing a mutable tu
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open FPTurtleLib
 open TurtleApiHelpers // helpers for API validation, etc
@@ -86,11 +85,11 @@ module TurtleApiLayer =
                     lift2R setColor colorR stateR
 
                 | _ -> 
-                    Failure (InvalidCommand commandStr)
+                    Error (InvalidCommand commandStr)
         
             // Lift `updateState` into the world of Results and 
             // call it with the new state.
-            mapR updateState newStateR
+            Result.map updateState newStateR
 
             // Return the final result (output of updateState)
 
@@ -176,6 +175,6 @@ TurtleApiClient.drawPolygon 4
 
 // test errors
 TurtleApiClient.triggerError()  
-// Failure (InvalidDistance "bad")
+// Error (InvalidDistance "bad")
 *)
 

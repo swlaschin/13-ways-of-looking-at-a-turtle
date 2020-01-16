@@ -21,7 +21,6 @@ No interface is passed to the constructor.
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open FPTurtleLib
 open TurtleApiHelpers // helpers for API validation, etc
@@ -55,7 +54,7 @@ module TurtleApi_PassInSingleFunction =
         member this.Exec turtleFn (commandStr:string) = 
             let tokens = commandStr.Split(' ') |> List.ofArray |> List.map trimString
 
-            // return Success of unit, or Failure
+            // return Ok of unit, or Error
             match tokens with
             | [ "Move"; distanceStr ] -> result {
                 let! distance = validateDistance distanceStr 
@@ -86,7 +85,7 @@ module TurtleApi_PassInSingleFunction =
                 updateState newState
                 }
             | _ -> 
-                Failure (InvalidCommand commandStr)
+                Error (InvalidCommand commandStr)
 
       
 
@@ -96,7 +95,6 @@ module TurtleApi_PassInSingleFunction =
 
 module TurtleImplementation_PassInSingleFunction = 
     
-    open FPTurtleLib
     open TurtleApi_PassInSingleFunction
 
     let log = printfn "%s"

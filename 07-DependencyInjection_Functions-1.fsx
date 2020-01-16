@@ -21,7 +21,6 @@ No interface is passed to the constructor.
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open FPTurtleLib
 open TurtleApiHelpers // helpers for API validation, etc
@@ -49,7 +48,7 @@ module TurtleApi_PassInAllFunctions =
         member this.Exec move turn penUp penDown setColor (commandStr:string) = 
             let tokens = commandStr.Split(' ') |> List.ofArray |> List.map trimString
 
-            // return Success of unit, or Failure
+            // return Ok of unit, or Error
             match tokens with
             | [ "Move"; distanceStr ] -> result {
                 let! distance = validateDistance distanceStr 
@@ -75,7 +74,7 @@ module TurtleApi_PassInAllFunctions =
                 updateState newState
                 }
             | _ -> 
-                Failure (InvalidCommand commandStr)
+                Error (InvalidCommand commandStr)
 
 // -----------------------------
 // Turtle Implementations for "Pass in all functions" design
@@ -83,7 +82,6 @@ module TurtleApi_PassInAllFunctions =
 
 module TurtleImplementation_PassInAllFunctions = 
     
-    open FPTurtleLib
     open TurtleApi_PassInAllFunctions
 
     let log = printfn "%s"
@@ -145,6 +143,6 @@ do
 do
     let mockApi s = 
         printfn "[MockAPI] %s" s
-        Success ()
+        Ok ()
     TurtleApiClient_PassInAllFunctions.drawTriangle(mockApi) 
 
