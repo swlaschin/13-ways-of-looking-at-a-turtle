@@ -18,7 +18,6 @@ while the state is being passed around behind the scenes.
 #load "Common.fsx"
 #load "FPTurtleLib2.fsx"
 
-open System
 open Common
 open FPTurtleLib2
 
@@ -78,8 +77,7 @@ module TurtleStateComputation =
 
 module TurtleComputationClient = 
 
-    open TurtleStateComputation 
-    open Result
+    open TurtleStateComputation
 
     /// Function to log a message
     let log message =

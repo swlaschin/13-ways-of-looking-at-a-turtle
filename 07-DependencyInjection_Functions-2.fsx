@@ -21,7 +21,6 @@ No interface is passed to the constructor.
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open FPTurtleLib
 open TurtleApiHelpers // helpers for API validation, etc
@@ -96,7 +95,6 @@ module TurtleApi_PassInSingleFunction =
 
 module TurtleImplementation_PassInSingleFunction = 
     
-    open FPTurtleLib
     open TurtleApi_PassInSingleFunction
 
     let log = printfn "%s"

@@ -21,7 +21,6 @@ The API layer manages the state (rather than the client) by storing a mutable tu
 #load "FPTurtleLib.fsx"
 #load "TurtleApiHelpers.fsx"
 
-open System
 open Common
 open FPTurtleLib
 open TurtleApiHelpers // helpers for API validation, etc

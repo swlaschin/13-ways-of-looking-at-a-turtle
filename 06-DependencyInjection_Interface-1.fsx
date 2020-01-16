@@ -17,7 +17,6 @@ The client injects a specific turtle implementation via the API's constructor.
 #load "Common.fsx"
 #load "OOTurtleLib.fsx"
 
-open System
 open Common
 
 // ============================================================================
