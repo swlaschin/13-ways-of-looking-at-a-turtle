@@ -2,6 +2,8 @@
 
 Related blog post: http://fsharpforfunandprofit.com/posts/13-ways-of-looking-at-a-turtle/
 
+**NOTE** There is a more recently updated version of this repository at https://github.com/swlaschin/turtle
+
 ## Requirements for a Turtle
 
 A turtle supports four instructions:
